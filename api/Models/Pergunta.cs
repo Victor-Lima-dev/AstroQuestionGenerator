@@ -14,5 +14,8 @@ namespace api.Models
         public bool Valided { get; set; } = false;
 
         public List<Resposta> Respostas { get; set; } = new List<Resposta>();
+
+        public List<TAG> TAGs { get; set; } = new List<TAG>();
+
     }
 }
