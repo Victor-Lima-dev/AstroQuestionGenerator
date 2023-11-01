@@ -1,0 +1,23 @@
+# @name requisicao
+@WebSockets = "WebSockets are a protocol that enables bidirectional communication between a client and a server. They are useful for scenarios where you need low-latency and high-performance data exchange, such as chat applications, online games, or live video streaming. You can use the System.Net.WebSockets namespace to work with WebSockets in C#"
+@historiaBrasil = "A história do Brasil começou com a ocupação dos seres humanos a cerca de 12-20 mil anos. No século XVI, os portugueses começaram a colonizar estas terras e transferiram africanos para serem mão de obra escrava nos engenhos que construíram aqui. Por sua vez, estes trabalhadores forçados trariam novos alimentos e animais que mudariam a história dos povos originários para sempre."
+
+
+//Iniciar Requisicao
+POST http://localhost:5084/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
+
+###
+@id = {{requisicao.response.body.$}}
+//Consultar a requisicao pelo id
+GET http://localhost:5084/api/Requisicoes/ConsultarRequisicao?id={{id}}
+
+###
+//Pesquisa a pergunta pelo id da requisicao
+
+GET http://localhost:5084/api/Requisicoes/ConsultarPergunta?id={{id}}
+
+###
+POST http://localhost:5084/api/Requisicoes/ReenviarRequisicao?id={{id}}&textoNormal=true
+
+
+

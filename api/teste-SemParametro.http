@@ -1,0 +1,13 @@
+###
+//Retorna todas as Requisicoes
+
+GET http://localhost:5084/api/Requisicoes/ConsultarRequisicoes
+
+###
+//Retorna todos os textos bases
+GET http://localhost:5084/api/Requisicoes/ConsultarTextosBases
+
+###
+//Retorna todas as perguntas geradas
+GET http://localhost:5084/api/Requisicoes/ConsultarPerguntas
+
