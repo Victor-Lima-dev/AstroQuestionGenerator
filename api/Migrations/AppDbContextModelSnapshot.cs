@@ -116,7 +116,7 @@ namespace api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TAG");
+                    b.ToTable("TAGs");
                 });
 
             modelBuilder.Entity("api.Models.TextoBase", b =>

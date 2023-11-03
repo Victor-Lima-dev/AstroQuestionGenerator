@@ -56,7 +56,14 @@ namespace api.Controllers
         }
 
 
-        [HttpPost("IniciarRequisicaoTAG")]
+
+        [HttpGet("ConsultarTAGs")]
+        public async Task<IActionResult> ConsultarTAGs()
+        {
+            var tags = await _context.TAGs.Include(t => t.Perguntas).ToListAsync();
+            return Ok(tags);
+        }
+
         public async Task<IActionResult> IniciarRequisicaoTAG(string textoEntrada)
         {
             var requisicao = new Requisicao
@@ -118,6 +125,8 @@ namespace api.Controllers
         public async Task<IActionResult> ConsultarPerguntas()
         {
             var respostas = await _context.Respostas.ToListAsync();
+            var tags = await _context.TAGs.ToListAsync();
+            
             var perguntas = await _context.Perguntas.ToListAsync();
 
             return Ok(perguntas);
@@ -147,8 +156,10 @@ namespace api.Controllers
                         return Ok("A requisição falhou, houve alguma falha no processo");
 
                     case Requisicao r when r.Status == StatusRequisicao.Pronto:
-
-                        var pergunta = await _context.Perguntas.FirstOrDefaultAsync(x => x.RequisicaoId == id);
+                    
+                        var pergunta = await _context.Perguntas
+                            .Include(p => p.TAGs)
+                            .FirstOrDefaultAsync(x => x.RequisicaoId == id);
 
                         return Ok(pergunta);
 

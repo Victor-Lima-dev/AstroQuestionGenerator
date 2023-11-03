@@ -21,6 +21,8 @@ namespace worker.context
         public DbSet<TextoBase> TextosBase { get; set; }
 
         public DbSet<Resposta> Respostas { get; set; }
+
+        public DbSet<TAG> TAGs { get; set; }
       
     }
 }

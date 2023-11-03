@@ -220,10 +220,11 @@ NOT ADD ANY OBS
         }
 
       }
+
       return resposta;
     }
 
-    public async static Task<string> GerarPerguntaTAGAsync2(string entrada)
+    public async static Task<string> GerarPerguntaTAGAsync2(string entrada, string prompt, string tipo)
 
     {
       string key = "5ab8e3af2fd14070af933c3bc360b07a";
@@ -234,9 +235,6 @@ NOT ADD ANY OBS
 
       var resposta = " ";
 
-      string prompt = "you want me to help you study for the college exam, providing a question based on a TAGS that you send me. You want the question to be multiple choice, with four alternatives,You also want me to put my answer in JSON format, following the model that you indicate. Model The answer should follow the following JSON model DONT ADD ANY EXTRA INFORMATION OUTSIDE OF THE JSON, THE ANSWER SHOULD JUST BE THE JSON #TEXT IN BRAZILIAN PORTUGUESE#{ {RequisicaoId: , Conteudo: , Status: , Respostas: [ { PerguntaId: , Conteudo: , Correta: , Status:  }, { PerguntaId: , Conteudo: , Correta: , Status:  }, { PerguntaId: , Conteudo: , Correta: , Status:  }, { PerguntaId: , Conteudo: , Correta: , Status:  }, { PerguntaId: , Conteudo: , Correta: , Status:  } ]}##EXAMPLE##User:TAGS: HISTORIADOBRASIL, HISTORIA, PERIODOCOLONIALBRASILAssistant: { “RequisicaoId”: “ “c75d06a8-a705-48ec-b6b3-9076becf20f4” ”, “Conteudo”: “Qual foi o principal fator que levou à transferência da sede do Estado do Brasil para o Rio de Janeiro em 1763?”, “Status”: “OK”, “Respostas”: [ { “PerguntaId”: “ “c75d06a8-a705-48ec-b6b3-9076becf20f4” ”, “Conteudo”: “A necessidade de uma melhor defesa contra os ataques dos franceses e dos holandeses.”, “Correta”: False, “Status”: “OK” }, { “PerguntaId”:  “c75d06a8-a705-48ec-b6b3-9076becf20f4” , “Conteudo”: “A proximidade com as minas de ouro e diamantes descobertas no interior da colônia.”, “Correta”: True, “Status”: “OK” }, { “PerguntaId”: “ “c75d06a8-a705-48ec-b6b3-9076becf20f4” ”, “Conteudo”: “A influência dos jesuítas na administração colonial e na catequização dos índios.”, “Correta”: False, “Status”: “OK” }, { “PerguntaId”: “ “c75d06a8-a705-48ec-b6b3-9076becf20f4” ”, “Conteudo”: “A expansão da cultura da cana-de-açúcar e do comércio triangular com a África e a Europa.”, “Correta”: False, “Status”: “OK” } ] }OrientaçõesThe question must be related to the base TAGS that you send me. TAGS. The alternatives must be plausible, but only one must be correct. I must put everything in JSON format to facilitate copying and inserting into your systemThe question must be related to TAGS text that you send me alternatives must be plausible, but only one must be correct. I must put everything in JSON format to facilitate copying and inserting into your system.you want me to help you study for the college exam, providing a question based on a TAGS  hat you send me. You want the question to be multiple choice, with four alternatives, . You also want me to put my answer in JSON format, following the model that you indicate. Model The answer should follow the following JSON model:####TEXT IN BRAZILIAN PORTUGUESE#########YOU REMEMBER THE MODEL? SINCE YOU UNDERSTOOD, MAKE THE QUESTION BASED ON THE TAGS, I TRUST THAT YOU UNDERSTOOD, YOU CAN MAKE THE QUESTION FOLLOWING THE MODEL, NOT TEXT BASE IN ANWSER , in the ID need put GUID format DONT ADD ANY EXTRA INFORMATION OUTSIDE OF THE JSON, THE ANSWER SHOULD JUST BE THE JSONPLEASE REMEMBER NOT TO ADD ANY REMARKS (OBS)NOT ADD ANY OBS ####" ;
-
-
       var chatCompletionsOptions = new ChatCompletionsOptions()
       {
         Messages =
@@ -245,7 +243,7 @@ NOT ADD ANY OBS
          prompt
 ),
         new ChatMessage(ChatRole.Assistant, "Sim, irei enviar a resposta em formato JSON, Seguindo o modelo que você indicar. Modelo A resposta deve seguir o seguinte modelo JSON:"),
-        new ChatMessage(ChatRole.User, "Tags: " + pergunta),
+        new ChatMessage(ChatRole.User, tipo + pergunta),
     },
         MaxTokens = 1000
       };
@@ -255,15 +253,11 @@ NOT ADD ANY OBS
           chatCompletionsOptions);
       using StreamingChatCompletions streamingChatCompletions = response.Value;
 
-
-
       await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
       {
         await foreach (ChatMessage message in choice.GetMessageStreaming())
         {
-          //Console.Write(message.Content);
 
-          //concatenar a resposta do assistente com a pergunta do usuário
           resposta = resposta + message.Content;
         }
 
@@ -272,7 +266,15 @@ NOT ADD ANY OBS
     }
 
 
+    public static string FormatarResposta(string resposta)
+    {
+      int inicio = resposta.IndexOf("{");
+      int fim = resposta.LastIndexOf("}") + 1; 
+      int tamanho = fim - inicio; 
+      string resultado = resposta.Substring(inicio, tamanho);
 
+      return resultado;
+    }
 
 
   }
