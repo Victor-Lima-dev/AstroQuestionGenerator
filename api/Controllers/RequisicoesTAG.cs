@@ -6,6 +6,7 @@ using api.context;
 using api.Models;
 using api.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -57,5 +58,24 @@ namespace api.Controllers
         }
 
 
+
+        [HttpPost("PerguntasPorTags")]
+        public async Task<IActionResult> PerguntasPorTags(List<TAG> tags)
+        {
+            var listaPerguntas = new List<Pergunta>();
+
+            foreach (var tag in tags)
+            {
+                var perguntas = await _context.Perguntas.Include(p => p.TAGs).Where(x => x.TAGs.Any(y => y.Texto == tag.Texto)).ToListAsync();
+
+                //incluir nas perguntas as tags
+
+
+
+                listaPerguntas.AddRange(perguntas);
+            }
+
+            return Ok(listaPerguntas);
+        }
     }
 }
