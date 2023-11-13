@@ -53,42 +53,12 @@ namespace api.Controllers
             return Ok(requisicao.Id);
         }
 
-
-
         [HttpGet("ConsultarTAGs")]
         public async Task<IActionResult> ConsultarTAGs()
         {
             var tags = await _context.TAGs.Include(t => t.Perguntas).ToListAsync();
             return Ok(tags);
         }
-
-        // public async Task<IActionResult> IniciarRequisicaoTAG(string textoEntrada)
-        // {
-        //     var requisicao = new Requisicao
-        //     {
-        //         DataInicio = DateTime.Now,
-        //         Status = StatusRequisicao.Pendente,
-        //         Id = Guid.NewGuid()
-        //     };
-        //     var textoBase = new TextoBase
-        //     {
-        //         Texto = textoEntrada,
-        //         RequisicaoId = requisicao.Id
-        //     };
-
-        //     _context.Requisicoes.Add(requisicao);
-        //     _context.TextosBase.Add(textoBase);
-        //     await _context.SaveChangesAsync();
-
-        //     var queueName = "ProcessarTAG";
-
-        //     var mensageiro = new Mensageiro(_url, queueName, _context);
-
-        //     mensageiro.Publicar(requisicao.Id.ToString());
-
-
-        //     return Ok(requisicao.Id);
-        // }
 
         [HttpGet("ConsultarRequisicoes")]
         public async Task<IActionResult> ConsultarRequisicoes()
@@ -124,7 +94,7 @@ namespace api.Controllers
         {
             var respostas = await _context.Respostas.ToListAsync();
             var tags = await _context.TAGs.ToListAsync();
-            
+
             var perguntas = await _context.Perguntas.ToListAsync();
 
             return Ok(perguntas);
@@ -154,7 +124,7 @@ namespace api.Controllers
                         return Ok("A requisição falhou, houve alguma falha no processo");
 
                     case Requisicao r when r.Status == StatusRequisicao.Pronto:
-                    
+
                         var pergunta = await _context.Perguntas
                             .Include(p => p.TAGs)
                             .FirstOrDefaultAsync(x => x.RequisicaoId == id);
@@ -169,7 +139,7 @@ namespace api.Controllers
         }
 
         [HttpPost("ReenviarRequisicao")]
-        public async Task<IActionResult> ReenviarRequisicao(Guid id, bool textoNormal)
+        public async Task<IActionResult> ReenviarRequisicao(Guid id)
         {
             var requisicao = await _context.Requisicoes.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -180,23 +150,12 @@ namespace api.Controllers
 
             if (requisicao.Status == StatusRequisicao.FalhaGenerica || requisicao.Status == StatusRequisicao.FalhaPerguntasRespostas)
             {
-                if (textoNormal)
-                {
-                    var queueName = "ProcessarTexto";
-                    var mensageiro = new Mensageiro(_url, queueName, _context);
-                    requisicao.Status = StatusRequisicao.Pendente;                    
-                    _context.Requisicoes.Update(requisicao);
-                    mensageiro.Publicar(requisicao.Id.ToString());
-                }
 
-                else
-                {
-                    var queueName = "ProcessarTAG";
-                    var mensageiro = new Mensageiro(_url, queueName, _context);
-                    requisicao.Status = StatusRequisicao.Pendente;
-                    _context.Requisicoes.Update(requisicao);
-                    mensageiro.Publicar(requisicao.Id.ToString());
-                }
+                var queueName = "ProcessarTexto";
+                var mensageiro = new Mensageiro(_url, queueName, _context);
+                requisicao.Status = StatusRequisicao.Pendente;
+                _context.Requisicoes.Update(requisicao);
+                mensageiro.Publicar(requisicao.Id.ToString());
 
                 return Ok(requisicao.Id);
             }
@@ -208,6 +167,44 @@ namespace api.Controllers
 
 
         }
-    
+
+        [HttpPost("PerguntasPorTags")]
+        public async Task<IActionResult> PerguntasPorTags(List<TAG> tags)
+        {
+            var listaPerguntas = new List<Pergunta>();
+
+            foreach (var tag in tags)
+            {
+                var perguntas = await _context.Perguntas.
+                    Include(p => p.TAGs).
+                    Where(x => x.TAGs.Any(y => y.Texto == tag.Texto)).
+                    ToListAsync();
+
+                listaPerguntas.AddRange(perguntas);
+            }
+
+            return Ok(listaPerguntas);
+        }
+        [HttpPost("PerguntasPorTagsEstrito")]
+        public async Task<IActionResult> PerguntasPorTagsEstrito(List<TAG> tags)
+        {
+            var listaPerguntas = new List<Pergunta>();
+
+            var tagTextos = tags.Select(t => t.Texto).ToList();
+
+            foreach (var tag in tags)
+            {
+                var perguntas = await _context.Perguntas
+                    .Include(p => p.TAGs)
+                    .Where(p => tagTextos.All(tagTexto => p.TAGs.Any(t => t.Texto == tagTexto)))
+                    .ToListAsync();
+
+                listaPerguntas.AddRange(perguntas);
+            }
+
+            return Ok();
+        }
+
+
     }
 }
