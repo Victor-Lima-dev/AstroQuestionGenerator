@@ -280,31 +280,23 @@ namespace worker.Models
 
                     if (tipo == "TAGS: ")
                     {
-                        //separar o texto da variavel texto, a cada virgula, e colocar em uma lista de tags
-
                         var tags = texto.Split(",");
 
                         foreach (var tag in tags)
                         {
                             var tagString = tag.Trim();
 
-                            //verificar se existe uma tag com o mesmo texto no banco de dados
-
                             var tagExistente = await _context.TAGs.FirstOrDefaultAsync(x => x.Texto == tagString);
 
                             if (tagExistente != null)
                             {
-
-
                                 tagExistente.Perguntas.Add(perguntaDeserializada);
-
                                 listaTags.Add(tagExistente);
                                 continue;
                             }
                             else
                             {
                                 listaPerguntas.Add(perguntaDeserializada);
-
                                 var tagObjeto = new TAG
                                 {
                                     Id = Guid.NewGuid(),
@@ -318,8 +310,40 @@ namespace worker.Models
                         }
                     }
 
+                    
+                    listaTags = TAG.NormalizarTAG(perguntaDeserializada.TAGs);
+                    var listaTagsFinal = new List<TAG>();
 
-                    perguntaDeserializada.TAGs = listaTags;
+                     foreach (var tag in listaTags)
+                        {
+                            var tagString = tag.Texto.Trim();
+
+                            var tagExistente = await _context.TAGs.FirstOrDefaultAsync(x => x.Texto == tagString);
+
+                            if (tagExistente != null)
+                            {
+                                tagExistente.Perguntas.Add(perguntaDeserializada);
+                                listaTagsFinal.Add(tagExistente);
+                                continue;
+                            }
+                            else
+                            {
+                                listaPerguntas.Add(perguntaDeserializada);
+                                var tagObjeto = new TAG
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Texto = tagString,
+                                    Perguntas = listaPerguntas
+                                };
+                                listaTagsFinal.Add(tagObjeto);
+
+                                _context.TAGs.Add(tagObjeto);
+                            }
+                        }
+
+
+
+                    perguntaDeserializada.TAGs = listaTagsFinal;
 
                     foreach (var resposta in perguntaDeserializada.Respostas)
                     {

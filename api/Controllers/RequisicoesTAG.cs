@@ -57,8 +57,6 @@ namespace api.Controllers
 
         }
 
-
-
         [HttpPost("PerguntasPorTags")]
         public async Task<IActionResult> PerguntasPorTags(List<TAG> tags)
         {
@@ -66,16 +64,34 @@ namespace api.Controllers
 
             foreach (var tag in tags)
             {
-                var perguntas = await _context.Perguntas.Include(p => p.TAGs).Where(x => x.TAGs.Any(y => y.Texto == tag.Texto)).ToListAsync();
-
-                //incluir nas perguntas as tags
-
-
+                var perguntas = await _context.Perguntas.
+                    Include(p => p.TAGs).
+                    Where(x => x.TAGs.Any(y => y.Texto == tag.Texto)).
+                    ToListAsync();
 
                 listaPerguntas.AddRange(perguntas);
             }
 
             return Ok(listaPerguntas);
+        }
+        [HttpPost("PerguntasPorTagsEstrito")]
+        public async Task<IActionResult> PerguntasPorTagsEstrito(List<TAG> tags)
+        {
+            var listaPerguntas = new List<Pergunta>();
+
+            var tagTextos = tags.Select(t => t.Texto).ToList();
+
+            foreach (var tag in tags)
+            {
+                var perguntas = await _context.Perguntas
+                    .Include(p => p.TAGs)
+                    .Where(p => tagTextos.All(tagTexto => p.TAGs.Any(t => t.Texto == tagTexto)))
+                    .ToListAsync();
+
+                listaPerguntas.AddRange(perguntas);
+            }
+
+            return Ok();
         }
     }
 }

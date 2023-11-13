@@ -7,9 +7,10 @@ namespace api.Models
 {
     public class TAG : BaseModel
     {
-        public string Texto { get; set; }
+        public string Texto { get; set; } = string.Empty;
 
         public List<Pergunta> Perguntas { get; set; } = new List<Pergunta>();
+
 
 
         public static string ConcatenarTags(List<TAG> tags)

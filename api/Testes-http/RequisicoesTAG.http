@@ -25,11 +25,10 @@ content-Type: application/json
 
  [
     {
-        "Texto" : "Orientação a Objetos"
+        "Texto" : "Quimica"
     }
   ]
-
-
+  
 ###
 @id = {{requisicao.response.body.$}}
 //Consultar a requisicao pelo id

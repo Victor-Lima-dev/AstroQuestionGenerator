@@ -120,3 +120,6 @@ Id: "xxx-xxxx-xxxxx-xxxx-xxx"
 
 **Back-end:** .NET 7, MySQL, RabbitMQ, ASP.NET
 
+
+
+

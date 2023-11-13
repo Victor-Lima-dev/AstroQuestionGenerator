@@ -28,8 +28,6 @@ build.ConfigureServices((context, services) =>
      services.AddSingleton<RequestServices>();
 
 
-
-
     services.AddHostedService<Worker>();
 
 

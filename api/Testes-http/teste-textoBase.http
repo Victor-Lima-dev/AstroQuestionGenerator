@@ -4,6 +4,7 @@
 
 
 //Iniciar Requisicao
+
 POST http://localhost:5084/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
 
 ###

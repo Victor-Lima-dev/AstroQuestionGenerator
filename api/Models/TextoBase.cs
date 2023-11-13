@@ -8,6 +8,7 @@ namespace api.Models
     public sealed class TextoBase : BaseModel
     {
         public Guid RequisicaoId { get; set; }
-        public string Texto { get; set; }
+        public string Texto { get; set; } = string.Empty;
+     
     }
 }

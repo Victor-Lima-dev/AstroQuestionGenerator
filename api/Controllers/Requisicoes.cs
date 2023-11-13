@@ -34,7 +34,6 @@ namespace api.Controllers
                 Id = Guid.NewGuid()
             };
 
-
             var textoBase = new TextoBase
             {
                 Texto = textoEntrada,
@@ -51,7 +50,6 @@ namespace api.Controllers
 
             mensageiro.Publicar(requisicao.Id.ToString());
 
-
             return Ok(requisicao.Id);
         }
 
@@ -64,33 +62,33 @@ namespace api.Controllers
             return Ok(tags);
         }
 
-        public async Task<IActionResult> IniciarRequisicaoTAG(string textoEntrada)
-        {
-            var requisicao = new Requisicao
-            {
-                DataInicio = DateTime.Now,
-                Status = StatusRequisicao.Pendente,
-                Id = Guid.NewGuid()
-            };
-            var textoBase = new TextoBase
-            {
-                Texto = textoEntrada,
-                RequisicaoId = requisicao.Id
-            };
+        // public async Task<IActionResult> IniciarRequisicaoTAG(string textoEntrada)
+        // {
+        //     var requisicao = new Requisicao
+        //     {
+        //         DataInicio = DateTime.Now,
+        //         Status = StatusRequisicao.Pendente,
+        //         Id = Guid.NewGuid()
+        //     };
+        //     var textoBase = new TextoBase
+        //     {
+        //         Texto = textoEntrada,
+        //         RequisicaoId = requisicao.Id
+        //     };
 
-            _context.Requisicoes.Add(requisicao);
-            _context.TextosBase.Add(textoBase);
-            await _context.SaveChangesAsync();
+        //     _context.Requisicoes.Add(requisicao);
+        //     _context.TextosBase.Add(textoBase);
+        //     await _context.SaveChangesAsync();
 
-            var queueName = "ProcessarTAG";
+        //     var queueName = "ProcessarTAG";
 
-            var mensageiro = new Mensageiro(_url, queueName, _context);
+        //     var mensageiro = new Mensageiro(_url, queueName, _context);
 
-            mensageiro.Publicar(requisicao.Id.ToString());
+        //     mensageiro.Publicar(requisicao.Id.ToString());
 
 
-            return Ok(requisicao.Id);
-        }
+        //     return Ok(requisicao.Id);
+        // }
 
         [HttpGet("ConsultarRequisicoes")]
         public async Task<IActionResult> ConsultarRequisicoes()
