@@ -5,7 +5,10 @@
 
 //Iniciar Requisicao
 
-POST http://localhost:5084/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
+# POST http://localhost:5084/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
+
+POST http://157.245.10.202:8002/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
+
 
 ###
 @id = {{requisicao.response.body.$}}
