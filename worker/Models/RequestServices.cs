@@ -277,40 +277,7 @@ namespace worker.Models
 
                     var listaTags = new List<TAG>();
                     var listaPerguntas = new List<Pergunta>();
-
-                    if (tipo == "TAGS: ")
-                    {
-                        var tags = texto.Split(",");
-
-                        foreach (var tag in tags)
-                        {
-                            var tagString = tag.Trim();
-
-                            var tagExistente = await _context.TAGs.FirstOrDefaultAsync(x => x.Texto == tagString);
-
-                            if (tagExistente != null)
-                            {
-                                tagExistente.Perguntas.Add(perguntaDeserializada);
-                                listaTags.Add(tagExistente);
-                                continue;
-                            }
-                            else
-                            {
-                                listaPerguntas.Add(perguntaDeserializada);
-                                var tagObjeto = new TAG
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Texto = tagString,
-                                    Perguntas = listaPerguntas
-                                };
-                                listaTags.Add(tagObjeto);
-
-                                _context.TAGs.Add(tagObjeto);
-                            }
-                        }
-                    }
-
-                    
+                 
                     listaTags = TAG.NormalizarTAG(perguntaDeserializada.TAGs);
                     var listaTagsFinal = new List<TAG>();
 
@@ -341,8 +308,6 @@ namespace worker.Models
                             }
                         }
 
-
-
                     perguntaDeserializada.TAGs = listaTagsFinal;
 
                     foreach (var resposta in perguntaDeserializada.Respostas)
@@ -352,6 +317,7 @@ namespace worker.Models
                     }
 
                     _context.Perguntas.Add(perguntaDeserializada);
+                    
                     requisicao.Status = StatusRequisicao.Pronto;
                     requisicao.DataFim = DateTime.Now;
                     await _context.SaveChangesAsync();

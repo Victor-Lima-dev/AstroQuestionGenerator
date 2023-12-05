@@ -126,7 +126,7 @@ namespace api.Controllers
                     case Requisicao r when r.Status == StatusRequisicao.Pronto:
 
                         var pergunta = await _context.Perguntas
-                            .Include(p => p.TAGs)
+                            .Include(p => p.Respostas).Include(p => p.TAGs)
                             .FirstOrDefaultAsync(x => x.RequisicaoId == id);
 
                         return Ok(pergunta);
