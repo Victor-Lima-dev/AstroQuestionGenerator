@@ -206,5 +206,30 @@ namespace api.Controllers
         }
 
 
+        [HttpPost("ResponderPergunta")]
+        public async Task<IActionResult>ResponderPergunta (Guid IdPergunta, Guid IdResposta)
+        {
+    
+            var pergunta = await _context.Perguntas.FirstOrDefaultAsync(x => x.Id == IdPergunta);
+            var resposta = await _context.Respostas.FirstOrDefaultAsync(x => x.Id == IdResposta);
+
+            if (pergunta == null || resposta == null)
+            {
+                return NotFound("Pergunta ou resposta não encontrada");
+            }
+
+            //verificar se a pergunta e a resposta sao correspondentes
+
+            if (!pergunta.Respostas.Any(x => x.Id == resposta.Id))
+            {
+                return BadRequest("A resposta não corresponde a pergunta");
+            }
+
+            var retorno = resposta.Correta;
+
+
+
+            return Ok(retorno);
+        }
     }
 }

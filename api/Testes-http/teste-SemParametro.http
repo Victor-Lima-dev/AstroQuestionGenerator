@@ -9,5 +9,5 @@ GET http://localhost:5084/api/Requisicoes/ConsultarTextosBases
 
 ###
 //Retorna todas as perguntas geradas
-GET http://localhost:5084/api/Requisicoes/ConsultarPerguntas
+GET http://172.17.255.255:8002/api/Requisicoes/ConsultarPerguntas
 
