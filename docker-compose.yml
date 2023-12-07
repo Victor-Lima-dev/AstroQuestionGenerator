@@ -10,14 +10,4 @@ services:
    user: root
    build: 
     context: ./api  
-    
-  worker:
-   image: vitinholol/worker
-   container_name: worker
-   restart: always
-   ports:
-    - 8003:80
-   user: root
-   build: 
-    context: ./worker  
-    
+
