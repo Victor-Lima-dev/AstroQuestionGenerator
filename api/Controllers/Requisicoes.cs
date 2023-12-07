@@ -25,7 +25,7 @@ namespace api.Controllers
 
 
         [HttpPost("IniciarRequisicao")]
-        public async Task<IActionResult> IniciarRequisicao(string textoEntrada)
+        public async Task<IActionResult> IniciarRequisicao([FromForm] string textoEntrada)
         {
             var requisicao = new Requisicao
             {
