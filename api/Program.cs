@@ -16,8 +16,12 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
+builder.Services.AddCors();
+
 
 string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
+
+Console.WriteLine($"mySqlConnectionStr: {mySqlConnectionStr}");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
 
@@ -29,6 +33,8 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 // }
+
+app.UseCors(options => options.WithOrigins("http://localhost:5088").AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
