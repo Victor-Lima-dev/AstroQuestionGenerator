@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\ProjetoPerguntasRespostas\\worker\\worker.csproj": {}
+    "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\worker\\worker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\ProjetoPerguntasRespostas\\worker\\worker.csproj": {
+    "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\worker\\worker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\ProjetoPerguntasRespostas\\worker\\worker.csproj",
+        "projectUniqueName": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\worker\\worker.csproj",
         "projectName": "worker",
-        "projectPath": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\ProjetoPerguntasRespostas\\worker\\worker.csproj",
-        "packagesPath": "C:\\Users\\vlima06\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\ProjetoPerguntasRespostas\\worker\\obj\\",
+        "projectPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\worker\\worker.csproj",
+        "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\worker\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\vlima06\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

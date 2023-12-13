@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = worker
-build_property.ProjectDir = C:\Users\vlima06\OneDrive - JACTO\Área de Trabalho\Simples\ProjetoPerguntasRespostas\worker\
+build_property.ProjectDir = C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\
