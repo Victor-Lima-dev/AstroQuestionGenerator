@@ -1590,11 +1590,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
+      "projectUniqueName": "c:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
+      "projectPath": "c:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
       "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\obj\\",
+      "outputPath": "c:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
