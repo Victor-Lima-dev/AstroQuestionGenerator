@@ -62,7 +62,6 @@ C:\Users\vlima06\OneDrive - JACTO\Área de Trabalho\Simples\ProjetoPerguntasResp
 C:\Users\vlima06\OneDrive - JACTO\Área de Trabalho\Simples\ProjetoPerguntasRespostas\worker\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\vlima06\OneDrive - JACTO\Área de Trabalho\Simples\ProjetoPerguntasRespostas\worker\bin\Debug\net7.0\System.Memory.Data.dll
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\appsettings.Development.json
-C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\appsettings.json
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\worker.exe
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\worker.deps.json
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\worker.runtimeconfig.json
