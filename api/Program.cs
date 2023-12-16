@@ -34,7 +34,11 @@ var app = builder.Build();
     app.UseSwaggerUI();
 // }
 
-app.UseCors(options => options.WithOrigins("http://localhost:5155").AllowAnyMethod().AllowAnyHeader());
+// app.UseCors(options => options.WithOrigins("http://localhost:5155").AllowAnyMethod().AllowAnyHeader());
+
+//libera o cors para qualquer origem
+
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 
