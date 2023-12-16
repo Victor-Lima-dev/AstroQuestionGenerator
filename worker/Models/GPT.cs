@@ -266,15 +266,30 @@ NOT ADD ANY OBS
     }
 
 
-    public static string FormatarResposta(string resposta)
-    {
-      int inicio = resposta.IndexOf("{");
-      int fim = resposta.LastIndexOf("}") + 1; 
-      int tamanho = fim - inicio; 
-      string resultado = resposta.Substring(inicio, tamanho);
+   public static string FormatarResposta(string resposta)
+{
+    int inicio = resposta.IndexOf("{");
 
-      return resultado;
+    // Verificar se a chave de abertura foi encontrada
+    if (inicio == -1)
+    {
+        // Se não foi encontrada, retornar uma mensagem de erro ou lidar de acordo
+        return "Chave de abertura não encontrada na resposta.";
     }
+
+    int fim = resposta.LastIndexOf("}") + 1;
+    int tamanho = fim - inicio;
+    
+    // Verificar se o tamanho é positivo antes de tentar extrair a substring
+    if (tamanho <= 0)
+    {
+        // Se o tamanho não for positivo, retornar uma mensagem de erro ou lidar de acordo
+        return "Tamanho inválido para extrair a substring.";
+    }
+
+    string resultado = resposta.Substring(inicio, tamanho);
+    return resultado;
+}
 
 
   }

@@ -77,7 +77,7 @@ namespace api.Controllers
         }
 
         [HttpGet("ConsultarRequisicao")]
-        public async Task<IActionResult> ConsultarRequisicao(Guid id)
+        public async Task<IActionResult> ConsultarRequisicao([FromQuery] Guid id)
         {
             var requisicao = await _context.Requisicoes.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -207,15 +207,22 @@ namespace api.Controllers
 
 
         [HttpPost("ResponderPergunta")]
-        public async Task<IActionResult>ResponderPergunta (Guid IdPergunta, Guid IdResposta)
+        public async Task<IActionResult>ResponderPergunta ([FromForm] Guid IdPergunta,[FromForm] Guid IdResposta)
         {
     
             var pergunta = await _context.Perguntas.FirstOrDefaultAsync(x => x.Id == IdPergunta);
             var resposta = await _context.Respostas.FirstOrDefaultAsync(x => x.Id == IdResposta);
 
-            if (pergunta == null || resposta == null)
+            if (pergunta == null)
             {
-                return NotFound("Pergunta ou resposta não encontrada");
+                Console.WriteLine(pergunta);
+                return NotFound("Pergunta não encontrada");
+            }
+
+            if (resposta == null)
+            {
+                Console.WriteLine(resposta);
+                return NotFound("Resposta não encontrada");
             }
 
             //verificar se a pergunta e a resposta sao correspondentes
