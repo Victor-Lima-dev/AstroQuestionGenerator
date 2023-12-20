@@ -95,7 +95,25 @@ namespace api.Controllers
             var respostas = await _context.Respostas.ToListAsync();
             var tags = await _context.TAGs.ToListAsync();
 
-            var perguntas = await _context.Perguntas.ToListAsync();
+            // var perguntas = await _context.Perguntas.ToListAsync();
+
+          var perguntas = await _context.Perguntas
+    .Include(p => p.Respostas)
+    .Select(p => new
+    {
+        Id = p.Id,
+        RequisicaoId = p.RequisicaoId,
+        Conteudo = p.Conteudo,
+        Respostas = p.Respostas.Select(r => new
+        {
+            Id = r.Id,
+            Conteudo = r.Conteudo,
+            Correta = r.Correta
+        }),
+        Tags = p.TAGs.Select(t => t.Texto)  // Incluir apenas os nomes das TAGs
+    })
+    .ToListAsync();
+
 
             return Ok(perguntas);
         }
@@ -169,21 +187,43 @@ namespace api.Controllers
         }
 
         [HttpPost("PerguntasPorTags")]
-        public async Task<IActionResult> PerguntasPorTags(List<TAG> tags)
+        public async Task<IActionResult> PerguntasPorTags([FromForm] Guid tagId)
         {
-            var listaPerguntas = new List<Pergunta>();
+            //verificar se a tag existe
 
-            foreach (var tag in tags)
+            var tagExistente = await _context.TAGs.FirstOrDefaultAsync(x => x.Id == tagId);
+
+            if (tagExistente == null)
             {
-                var perguntas = await _context.Perguntas.
-                    Include(p => p.TAGs).
-                    Where(x => x.TAGs.Any(y => y.Texto == tag.Texto)).
-                    ToListAsync();
-
-                listaPerguntas.AddRange(perguntas);
+                Console.WriteLine(tagId);
+                return NotFound("Tag não encontrada");
             }
 
-            return Ok(listaPerguntas);
+
+           
+                            
+          var perguntas = await _context.Perguntas
+            .Include(p => p.Respostas)
+            .Select(p => new
+            {
+            Id = p.Id,
+            RequisicaoId = p.RequisicaoId,
+            Conteudo = p.Conteudo,
+            Respostas = p.Respostas.Select(r => new
+            {
+                Id = r.Id,
+                Conteudo = r.Conteudo,
+                Correta = r.Correta
+            }),
+            Tags = p.TAGs.Select(t => t.Texto)  
+            }).Where(p => p.Tags.Any(t => t == tagExistente.Texto))
+            .ToListAsync();
+
+            Console.WriteLine(perguntas);
+        
+
+            return Ok(perguntas);
+          
         }
         [HttpPost("PerguntasPorTagsEstrito")]
         public async Task<IActionResult> PerguntasPorTagsEstrito(List<TAG> tags)
@@ -205,6 +245,14 @@ namespace api.Controllers
             return Ok();
         }
 
+
+        [HttpGet("RetornarTAGs")]
+        public async Task<IActionResult> RetornarTAGs()
+        {
+            var tags = await _context.TAGs.ToListAsync();
+
+            return Ok(tags);
+        }
 
         [HttpPost("ResponderPergunta")]
         public async Task<IActionResult>ResponderPergunta ([FromForm] Guid IdPergunta,[FromForm] Guid IdResposta)

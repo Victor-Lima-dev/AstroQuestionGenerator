@@ -3,13 +3,20 @@
 @historiaBrasil = "A história do Brasil começou com a ocupação dos seres humanos a cerca de 12-20 mil anos. No século XVI, os portugueses começaram a colonizar estas terras e transferiram africanos para serem mão de obra escrava nos engenhos que construíram aqui. Por sua vez, estes trabalhadores forçados trariam novos alimentos e animais que mudariam a história dos povos originários para sempre."
 
 
-//Iniciar Requisicao
 
- POST http://localhost:5084/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
 
 ###
 
-POST http://157.245.10.202:8002/api/Requisicoes/IniciarRequisicao?textoEntrada={{WebSockets}}
+// Criar um objeto FormData
+
+
+// Iniciar a requisição
+POST http://24.199.100.244:8002/api/Requisicoes/IniciarRequisicao
+Content-Type: multipart/form-data; 
+
+Content-Disposition: form-data; name="textoEntrada"
+
+
 
 
 ###
