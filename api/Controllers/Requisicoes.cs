@@ -245,6 +245,62 @@ namespace api.Controllers
             return Ok();
         }
 
+        [HttpGet("TAGsSemelhantes")]
+        public async Task<IActionResult> TAGsSemelhantes(string texto)
+        {
+            var tags = await _context.TAGs.ToListAsync();
+
+            var tagsSemelhantes = tags.Where(t => t.Texto.Contains(texto)).ToList();
+
+            return Ok(tagsSemelhantes);
+        }
+
+
+        [HttpGet("TAGsRelacionadas")]
+        public async Task<IActionResult> TAGsRelacionadas(Guid tagId)
+        {
+            //procurar uma lista de perguntas que contem a tag
+            //verificar se a tag existe
+
+            var tagExistente = await _context.TAGs.FirstOrDefaultAsync(x => x.Id == tagId);
+
+            if (tagExistente == null)
+            {
+                Console.WriteLine(tagId);
+                return NotFound("Tag não encontrada");
+            }    
+                    
+          var perguntas = await _context.Perguntas
+            .Include(p => p.Respostas)
+            .Select(p => new
+            {
+            Id = p.Id,
+            RequisicaoId = p.RequisicaoId,
+            Conteudo = p.Conteudo,
+            Respostas = p.Respostas.Select(r => new
+            {
+                Id = r.Id,
+                Conteudo = r.Conteudo,
+                Correta = r.Correta
+            }),
+            Tags = p.TAGs.Select(t => t.Texto)  
+            }).Where(p => p.Tags.Any(t => t == tagExistente.Texto))
+            .ToListAsync();
+
+            //agora que temos a lista de perguntas, vamos todas as tags que estão relacionadas a essas perguntas
+
+            var tagsRelacionadas = new List<TAG>();
+
+            foreach (var pergunta in perguntas)
+            {
+                var tags = await _context.TAGs.Where(t => pergunta.Tags.Any(tag => tag == t.Texto)).ToListAsync();
+
+                tagsRelacionadas.AddRange(tags);
+            }
+
+            return Ok(tagsRelacionadas);
+        }
+
 
         [HttpGet("RetornarTAGs")]
         public async Task<IActionResult> RetornarTAGs()
