@@ -1,8 +1,20 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using api.context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ // Configuração da aplicação
+        var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
+            .Build();
 
 // Add services to the container.
 
@@ -19,11 +31,30 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddCors();
 
 
+
+
+
 string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
-Console.WriteLine($"mySqlConnectionStr: {mySqlConnectionStr}");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
+
+
+// Configuração do JWT Bearer Authentication
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidIssuer = configuration["TokenConfiguration:Issuer"],
+                    ValidAudience = configuration["TokenConfiguration:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1215645151234561321524556121653412156234152"))
+                };
+            });
 
 var app = builder.Build();
 
@@ -41,6 +72,8 @@ var app = builder.Build();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
