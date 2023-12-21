@@ -310,6 +310,16 @@ namespace api.Controllers
             return Ok(tags);
         }
 
+        [HttpGet("ProcurarTAG")]
+        public async Task<IActionResult> ProcurarTAG(string texto)
+        {
+            //pesquisar todas as tags que contem o texto
+
+            var tags = await _context.TAGs.Where(t => t.Texto.Contains(texto)).ToListAsync();
+
+            return Ok(tags);
+        }
+
         [HttpPost("ResponderPergunta")]
         public async Task<IActionResult>ResponderPergunta ([FromForm] Guid IdPergunta,[FromForm] Guid IdResposta)
         {
