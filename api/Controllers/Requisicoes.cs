@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using api.context;
 using api.Models;
 using api.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class Requisicoes : ControllerBase
     {
