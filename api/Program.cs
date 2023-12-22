@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
  // Configuração da aplicação
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
         var configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -37,6 +38,14 @@ builder.Services.AddCors();
 string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
+
+string mySqlAmbiente = Environment.GetEnvironmentVariable("mysqlAstro");
+
+
+Console.WriteLine("mySqlAmbiente: " + mySqlAmbiente);
+
+
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
 
 
@@ -45,7 +54,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlCo
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
-                {
+                { 
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,

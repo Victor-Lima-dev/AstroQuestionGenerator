@@ -64,7 +64,7 @@ namespace api.Controllers
                 // Gerar a assinatura digital do nosso token utilizando o algoritmo Hmac e a chave privada
                 var credenciais = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var expiration = DateTime.UtcNow.AddHours(double.Parse("2"));
+                var expiration = DateTime.UtcNow.AddHours(double.Parse("6000"));
 
                 // Gerar token
                 var token = new JwtSecurityToken(

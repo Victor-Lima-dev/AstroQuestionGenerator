@@ -23,6 +23,8 @@ namespace api.context
         public DbSet<TAG> TAGs { get; set; }
         
         public DbSet<Resposta> Respostas { get; set; }
+
+        public DbSet<Lista> Listas { get; set; }
       
     }
 }
