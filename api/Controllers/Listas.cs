@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 namespace api.Controllers
 {
     [ApiController]
+
     [Authorize]
+    
     [Route("api/[controller]")]
     public class Listas : ControllerBase
     {

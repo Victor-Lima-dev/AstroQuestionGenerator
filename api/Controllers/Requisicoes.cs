@@ -312,6 +312,16 @@ namespace api.Controllers
             return Ok(tags);
         }
 
+        [HttpGet("RetornarTAGsPaginacao")]
+        public async Task<IActionResult> RetornarTAGsPaginacao(int quantidade)
+        {
+          //criar paginacao
+
+            var tags = await _context.TAGs.Take(quantidade).ToListAsync();
+
+            return Ok(tags);
+        }
+
         [HttpGet("ProcurarTAG")]
         public async Task<IActionResult> ProcurarTAG(string texto)
         {
