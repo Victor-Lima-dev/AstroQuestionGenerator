@@ -29,15 +29,19 @@ namespace api.Controllers
         [HttpPost("ReceberLista")]
         public ActionResult ReceberLista([FromForm] List<string> lista, [FromForm] string nome, [FromForm] string descricao)
         {
+
+
+
+            var listaSeparada = lista[0].Split(",").ToList();
            
            //a lista de strings contem uma lista de ids das perguntas, preciso pegar esses ids e buscar as perguntas no banco de dados
            // converter o id para GUID e buscar no banco de dados
 
          var perguntasRecebidas = new List<Pergunta>();     
 
-            foreach (var item in lista)
+            foreach (var item in listaSeparada)
             {
-                
+                Console.WriteLine(item);
                 //a string esta vindo entre colchetes [] e aspas "", preciso remover para depois converter para GUID
 
                 var id = item.Replace("[", "").Replace("]", "").Replace("\"", "");
@@ -73,7 +77,13 @@ namespace api.Controllers
         [HttpGet("RetornarTodasListas")]
         public ActionResult RetornarTodasListas()
         {
-            var listas = _context.Listas.Include(x => x.Perguntas).ToList();
+            var listas = _context.Listas
+                .Include(x => x.Perguntas)
+                    .ThenInclude(p => p.TAGs)
+                .Include(x => x.Perguntas)
+                    .ThenInclude(p => p.Respostas) // Include the responses
+                .ToList();
+
             return Ok(listas);
         }
 
