@@ -309,6 +309,8 @@ namespace api.Controllers
         {
             var tags = await _context.TAGs.ToListAsync();
 
+            
+
             return Ok(tags);
         }
 
@@ -330,6 +332,32 @@ namespace api.Controllers
             var tags = await _context.TAGs.Where(t => t.Texto.Contains(texto)).ToListAsync();
 
             return Ok(tags);
+        }
+
+        [HttpGet("ProcurarQuestao")]
+        public async Task<IActionResult> ProcurarQuestao(string texto)
+        {
+            //pesquisar todas as perguntas que contem o texto
+
+           var perguntas = await _context.Perguntas
+    .Where(t => t.Conteudo.Contains(texto))
+    .Include(p => p.Respostas)
+    .Select(p => new
+    {
+        Id = p.Id,
+        RequisicaoId = p.RequisicaoId,
+        Conteudo = p.Conteudo,
+        Respostas = p.Respostas.Select(r => new
+        {
+            Id = r.Id,
+            Conteudo = r.Conteudo,
+            Correta = r.Correta
+        }),
+        Tags = p.TAGs.Select(t => t.Texto)  // Incluir apenas os nomes das TAGs
+    })
+    .ToListAsync();
+
+            return Ok(perguntas);
         }
 
         [HttpPost("ResponderPergunta")]
