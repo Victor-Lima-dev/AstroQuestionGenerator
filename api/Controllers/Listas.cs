@@ -29,9 +29,6 @@ namespace api.Controllers
         [HttpPost("ReceberLista")]
         public ActionResult ReceberLista([FromForm] List<string> lista, [FromForm] string nome, [FromForm] string descricao)
         {
-
-
-
             var listaSeparada = lista[0].Split(",").ToList();
            
            //a lista de strings contem uma lista de ids das perguntas, preciso pegar esses ids e buscar as perguntas no banco de dados
@@ -94,5 +91,38 @@ namespace api.Controllers
             return Ok(lista);
         }
 
+
+        [HttpGet("ProcurarLista")]
+        public ActionResult ProcurarLista(string nome)
+        {
+            var lista = _context.Listas
+                .Where(x => x.Nome.Contains(nome))
+                .Include(x => x.Perguntas)
+                    .ThenInclude(p => p.TAGs)
+                .Include(x => x.Perguntas)
+                    .ThenInclude(p => p.Respostas)
+                .ToList();
+
+            return Ok(lista);
+        }
+
+        [HttpDelete("DeletarLista")]
+        public ActionResult DeletarLista(Guid id)
+        {
+            var lista = _context.Listas.Include(x => x.Perguntas).FirstOrDefault(x => x.Id == id);
+
+            if (lista == null)
+            {
+                return BadRequest("Lista não encontrada");
+            }
+
+            // Remover as perguntas da lista sem remover as perguntas do banco de dados
+            lista.Perguntas.Clear();
+
+            _context.Listas.Remove(lista);
+            _context.SaveChanges();
+
+            return Ok("Lista deletada com sucesso");
+        }
     }
 }
