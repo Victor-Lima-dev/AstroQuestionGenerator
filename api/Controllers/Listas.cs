@@ -124,5 +124,59 @@ namespace api.Controllers
 
             return Ok("Lista deletada com sucesso");
         }
+
+        [HttpPut("AtualizarPerguntasDaLista")]
+        public ActionResult AtualizarPerguntasDaLista([FromForm] string id, [FromForm] List<string> lista)
+        {
+            var listaSeparada = lista[0].Split(",").ToList();
+
+        
+
+            var idC = id.Replace("[", "").Replace("]", "").Replace("\"", "");
+
+            var novoId = Guid.Parse(idC);
+
+            //converter o id para GUID e buscar no banco de dados
+
+            var listaAtualizada = _context.Listas.Include(x => x.Perguntas).FirstOrDefault(x => x.Id == novoId);
+
+        
+
+            if (listaAtualizada == null)
+            {
+                return BadRequest("Lista não encontrada");
+            }
+
+            // Remover as perguntas da lista sem remover as perguntas do banco de dados
+            listaAtualizada.Perguntas.Clear();
+
+            foreach (var item in listaSeparada)
+            {
+                Console.WriteLine(item);
+                //a string esta vindo entre colchetes [] e aspas "", preciso remover para depois converter para GUID
+
+                var itemPergunta = item.Replace("[", "").Replace("]", "").Replace("\"", "");
+
+                var idConvertido = Guid.Parse(itemPergunta);
+
+                var pergunta = _context.Perguntas.Where(x => x.Id == idConvertido).FirstOrDefault();
+
+                //verificar se a pergunta existe
+
+                if (pergunta == null)
+                {
+                    return BadRequest("O id da pergunta não existe");
+                }
+
+                listaAtualizada.Perguntas.Add(pergunta);
+
+            }
+
+            _context.Listas.Update(listaAtualizada);
+            _context.SaveChanges();
+
+            return Ok("Lista atualizada com sucesso");
+        }
+
     }
 }
