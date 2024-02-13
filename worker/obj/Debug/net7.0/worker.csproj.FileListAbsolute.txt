@@ -123,3 +123,4 @@ C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\obj\Debug\net7.0
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\obj\Debug\net7.0\worker.pdb
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\obj\Debug\net7.0\worker.genruntimeconfig.cache
 C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\obj\Debug\net7.0\ref\worker.dll
+C:\Users\Vitor\Desktop\code\Astro\AstroQuestionGenerator\worker\bin\Debug\net7.0\appsettings.json

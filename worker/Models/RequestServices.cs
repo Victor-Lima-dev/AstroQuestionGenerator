@@ -66,6 +66,8 @@ namespace worker.Models
 
                 requisicao.Status = StatusRequisicao.Processando;
 
+                
+
                 await _context.SaveChangesAsync();
 
                 requisicao.Status = StatusRequisicao.AguardandoPerguntasRespostas;
@@ -279,6 +281,7 @@ namespace worker.Models
                     var listaPerguntas = new List<Pergunta>();
                  
                     listaTags = TAG.NormalizarTAG(perguntaDeserializada.TAGs);
+                    
                     var listaTagsFinal = new List<TAG>();
 
                      foreach (var tag in listaTags)
