@@ -38,7 +38,6 @@ namespace api.Controllers
 
             foreach (var item in listaSeparada)
             {
-                Console.WriteLine(item);
                 //a string esta vindo entre colchetes [] e aspas "", preciso remover para depois converter para GUID
 
                 var id = item.Replace("[", "").Replace("]", "").Replace("\"", "");
