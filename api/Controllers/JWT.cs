@@ -49,7 +49,6 @@ namespace api.Controllers
                 return Ok();
             }
 
-
             private string GerarToken()
             {
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1215645151234561321524556121653412156234152"));

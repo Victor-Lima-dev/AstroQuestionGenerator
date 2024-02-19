@@ -17,6 +17,8 @@ namespace api.Models
 
         public List<TAG> TAGs { get; set; } = new List<TAG>();
 
+        public string Explicacao { get; set; } = "";
+     
 
     }
 }

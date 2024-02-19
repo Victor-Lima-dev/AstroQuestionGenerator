@@ -14,5 +14,8 @@ namespace api.Models
         public bool Correta { get; set; }
 
         public bool Valided { get; set; } = false;
+
+        public string Erro { get; set; } = "";
+
     }
 }

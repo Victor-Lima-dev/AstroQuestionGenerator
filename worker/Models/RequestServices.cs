@@ -6,6 +6,7 @@ using worker.context;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
+using worker.Models;
 using Microsoft.EntityFrameworkCore;
 using worker.Models.Enums;
 using System.Text.Json;
@@ -262,7 +263,11 @@ namespace worker.Models
 
                 try
                 {
+                   
                     var perguntaDeserializada = JsonSerializer.Deserialize<Pergunta>(resultado);
+                   
+    
+
 
                     if (perguntaDeserializada == null)
                     {
@@ -281,6 +286,8 @@ namespace worker.Models
                     var listaPerguntas = new List<Pergunta>();
                  
                     listaTags = TAG.NormalizarTAG(perguntaDeserializada.TAGs);
+
+                    listaTags = TAG.RemoverTagsDuplicadas(listaTags);
                     
                     var listaTagsFinal = new List<TAG>();
 
@@ -294,6 +301,8 @@ namespace worker.Models
                             {
                                 tagExistente.Perguntas.Add(perguntaDeserializada);
                                 listaTagsFinal.Add(tagExistente);
+
+                                Console.WriteLine("Tag já existente: " + tagString);
                                 continue;
                             }
                             else
@@ -306,6 +315,8 @@ namespace worker.Models
                                     Perguntas = listaPerguntas
                                 };
                                 listaTagsFinal.Add(tagObjeto);
+
+                                Console.WriteLine("Nova tag adicionada: " + tagString);
 
                                 _context.TAGs.Add(tagObjeto);
                             }
@@ -320,6 +331,8 @@ namespace worker.Models
                     }
 
                     _context.Perguntas.Add(perguntaDeserializada);
+
+                    Console.WriteLine("Pergunta adicionada: " + perguntaDeserializada.Id);
                     
                     requisicao.Status = StatusRequisicao.Pronto;
                     requisicao.DataFim = DateTime.Now;

@@ -35,9 +35,19 @@ namespace worker.Models
 
                 tagsNormalizadas.Add(tagNormalizada);
             }
+            Console.WriteLine("TAGS NORMALIZADAS: " + tagsNormalizadas);
 
             return tagsNormalizadas;
         }
+
+
+                public static List<TAG> RemoverTagsDuplicadas(List<TAG> tags)
+{
+    return tags
+        .GroupBy(t => t.Texto.ToLower())
+        .Select(g => g.First())
+        .ToList();
+}
 
         
 

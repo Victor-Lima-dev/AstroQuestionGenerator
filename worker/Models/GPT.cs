@@ -273,6 +273,7 @@ NOT ADD ANY OBS
     // Verificar se a chave de abertura foi encontrada
     if (inicio == -1)
     {
+        Console.WriteLine(resposta);
         // Se não foi encontrada, retornar uma mensagem de erro ou lidar de acordo
         return "Chave de abertura não encontrada na resposta.";
     }

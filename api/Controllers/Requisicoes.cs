@@ -204,10 +204,7 @@ namespace api.Controllers
                 Console.WriteLine(tagId);
                 return NotFound("Tag não encontrada");
             }
-
-
-           
-                            
+                  
           var perguntas = await _context.Perguntas
             .Include(p => p.Respostas)
             .Select(p => new
@@ -224,9 +221,6 @@ namespace api.Controllers
             Tags = p.TAGs.Select(t => t.Texto)  
             }).Where(p => p.Tags.Any(t => t == tagExistente.Texto))
             .ToListAsync();
-
-            Console.WriteLine(perguntas);
-        
 
             return Ok(perguntas);
           
@@ -257,6 +251,8 @@ namespace api.Controllers
             var tags = await _context.TAGs.ToListAsync();
 
             var tagsSemelhantes = tags.Where(t => t.Texto.Contains(texto)).ToList();
+
+            tagsSemelhantes = TAG.RemoverTagsDuplicadas(tagsSemelhantes);
 
             return Ok(tagsSemelhantes);
         }
@@ -304,6 +300,14 @@ namespace api.Controllers
                 tagsRelacionadas.AddRange(tags);
             }
 
+            //agora vamos remover as tags que repetidas na lista
+
+          tagsRelacionadas = TAG.RemoverTagsDuplicadas(tagsRelacionadas);
+
+
+
+            
+
             return Ok(tagsRelacionadas);
         }
 
@@ -313,7 +317,7 @@ namespace api.Controllers
         {
             var tags = await _context.TAGs.ToListAsync();
 
-            
+            tags = TAG.RemoverTagsDuplicadas(tags);
 
             return Ok(tags);
         }
@@ -325,6 +329,15 @@ namespace api.Controllers
 
             var tags = await _context.TAGs.Take(quantidade).ToListAsync();
 
+            //verificar se existem tags iguais, por exemplo Quimica e quimica, só quero uma delas
+
+            tags = TAG.RemoverTagsDuplicadas(tags);
+            
+
+           
+
+
+
             return Ok(tags);
         }
 
@@ -334,6 +347,8 @@ namespace api.Controllers
             //pesquisar todas as tags que contem o texto
 
             var tags = await _context.TAGs.Where(t => t.Texto.Contains(texto)).ToListAsync();
+
+            tags = TAG.RemoverTagsDuplicadas(tags);
 
             return Ok(tags);
         }
@@ -373,13 +388,13 @@ namespace api.Controllers
 
             if (pergunta == null)
             {
-                Console.WriteLine(pergunta);
+
                 return NotFound("Pergunta não encontrada");
             }
 
             if (resposta == null)
             {
-                Console.WriteLine(resposta);
+       
                 return NotFound("Resposta não encontrada");
             }
 

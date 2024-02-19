@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using api.context;
+using worker.context;
 
 #nullable disable
 
-namespace api.Migrations
+namespace worker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -34,7 +34,7 @@ namespace api.Migrations
                     b.ToTable("PerguntaTAG");
                 });
 
-            modelBuilder.Entity("api.Models.Lista", b =>
+            modelBuilder.Entity("worker.Models.Lista", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,13 +53,17 @@ namespace api.Migrations
                     b.ToTable("Listas");
                 });
 
-            modelBuilder.Entity("api.Models.Pergunta", b =>
+            modelBuilder.Entity("worker.Models.Pergunta", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Conteudo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Erro")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -83,7 +87,7 @@ namespace api.Migrations
                     b.ToTable("Perguntas");
                 });
 
-            modelBuilder.Entity("api.Models.Requisicao", b =>
+            modelBuilder.Entity("worker.Models.Requisicao", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +110,7 @@ namespace api.Migrations
                     b.ToTable("Requisicoes");
                 });
 
-            modelBuilder.Entity("api.Models.Resposta", b =>
+            modelBuilder.Entity("worker.Models.Resposta", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +140,7 @@ namespace api.Migrations
                     b.ToTable("Respostas");
                 });
 
-            modelBuilder.Entity("api.Models.TAG", b =>
+            modelBuilder.Entity("worker.Models.TAG", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,7 +155,7 @@ namespace api.Migrations
                     b.ToTable("TAGs");
                 });
 
-            modelBuilder.Entity("api.Models.TextoBase", b =>
+            modelBuilder.Entity("worker.Models.TextoBase", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -171,41 +175,41 @@ namespace api.Migrations
 
             modelBuilder.Entity("PerguntaTAG", b =>
                 {
-                    b.HasOne("api.Models.Pergunta", null)
+                    b.HasOne("worker.Models.Pergunta", null)
                         .WithMany()
                         .HasForeignKey("PerguntasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("api.Models.TAG", null)
+                    b.HasOne("worker.Models.TAG", null)
                         .WithMany()
                         .HasForeignKey("TAGsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Models.Pergunta", b =>
+            modelBuilder.Entity("worker.Models.Pergunta", b =>
                 {
-                    b.HasOne("api.Models.Lista", null)
+                    b.HasOne("worker.Models.Lista", null)
                         .WithMany("Perguntas")
                         .HasForeignKey("ListaId");
                 });
 
-            modelBuilder.Entity("api.Models.Resposta", b =>
+            modelBuilder.Entity("worker.Models.Resposta", b =>
                 {
-                    b.HasOne("api.Models.Pergunta", null)
+                    b.HasOne("worker.Models.Pergunta", null)
                         .WithMany("Respostas")
                         .HasForeignKey("PerguntaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Models.Lista", b =>
+            modelBuilder.Entity("worker.Models.Lista", b =>
                 {
                     b.Navigation("Perguntas");
                 });
 
-            modelBuilder.Entity("api.Models.Pergunta", b =>
+            modelBuilder.Entity("worker.Models.Pergunta", b =>
                 {
                     b.Navigation("Respostas");
                 });

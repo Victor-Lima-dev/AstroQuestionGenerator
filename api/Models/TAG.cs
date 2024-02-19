@@ -24,6 +24,17 @@ namespace api.Models
             return texto;
         }
 
+
+
+        public static List<TAG> RemoverTagsDuplicadas(List<TAG> tags)
+{
+    return tags
+        .GroupBy(t => t.Texto.ToLower())
+        .Select(g => g.First())
+        .ToList();
+}
+
+
         public static List<TAG> NormalizarTAG(List<TAG> tags)
         {
             var tagsNormalizadas = new List<TAG>();
