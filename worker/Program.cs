@@ -18,13 +18,10 @@ build.ConfigureServices((context, services) =>
 
     services.AddSingleton(rabbitMQ);
 
-    services.AddDbContextPool<AppDbContext>(options => options.UseMySql(mySqlConnectionStr,
-     ServerVersion.AutoDetect(mySqlConnectionStr)));
-
-
-    // //var requestServices = new RequestServices(new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().UseMySql(mySqlConnectionStr,
-    //   //  ServerVersion.AutoDetect(mySqlConnectionStr)).Options));
-
+    // services.AddDbContextPool<AppDbContext>(options => options.UseMySql(mySqlConnectionStr,
+    //  ServerVersion.AutoDetect(mySqlConnectionStr)));
+     
+services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(mySqlConnectionStr));
      services.AddSingleton<RequestServices>();
 
 
