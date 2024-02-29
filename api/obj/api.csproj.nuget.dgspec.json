@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj": {}
+    "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\AstroQuestionGenerator\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj": {
+    "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\AstroQuestionGenerator\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\AstroQuestionGenerator\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Vitor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vitor\\Desktop\\code\\Astro\\AstroQuestionGenerator\\api\\obj\\",
+        "projectPath": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\AstroQuestionGenerator\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\vlima06\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vlima06\\OneDrive - JACTO\\Área de Trabalho\\Simples\\AstroQuestionGenerator\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Vitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vlima06\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -100,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

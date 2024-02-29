@@ -42,11 +42,10 @@ string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultCo
 string mySqlAmbiente = Environment.GetEnvironmentVariable("mysqlAstro");
 
 
-Console.WriteLine("mySqlAmbiente: " + mySqlAmbiente);
+//builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
 
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(mySqlConnectionStr));
 
-
-builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
 
 
 // Configuração do JWT Bearer Authentication

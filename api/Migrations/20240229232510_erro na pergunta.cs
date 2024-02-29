@@ -5,24 +5,17 @@
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class novaspropriedadesemperguntaserespostas : Migration
+    public partial class erronapergunta : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "Erro",
-                table: "Respostas",
-                type: "longtext",
-                nullable: false)
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Explicacao",
                 table: "Perguntas",
-                type: "longtext",
-                nullable: false)
-                .Annotation("MySql:CharSet", "utf8mb4");
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
@@ -30,10 +23,6 @@ namespace api.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Erro",
-                table: "Respostas");
-
-            migrationBuilder.DropColumn(
-                name: "Explicacao",
                 table: "Perguntas");
         }
     }

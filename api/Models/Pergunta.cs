@@ -19,6 +19,8 @@ namespace api.Models
 
         public string Explicacao { get; set; } = "";
      
+        public string Erro { get; set; } = "";
+
 
     }
 }
