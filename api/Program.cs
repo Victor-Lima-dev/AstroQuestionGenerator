@@ -33,18 +33,12 @@ builder.Services.AddCors();
 
 
 
-
-
-string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
-
-
-
 string mySqlAmbiente = Environment.GetEnvironmentVariable("mysqlAstro");
 
 
-//builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
+string mySqlConnectionStr = builder.Configuration.GetConnectionString("DefaultConnection2");
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(mySqlConnectionStr));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql (mySqlConnectionStr, ServerVersion. AutoDetect (mySqlConnectionStr)));
 
 
 
