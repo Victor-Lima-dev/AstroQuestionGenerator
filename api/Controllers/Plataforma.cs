@@ -42,10 +42,16 @@ namespace api.Controllers
                 tag.Id = Guid.NewGuid();
                 //loop para colocar o id da tag nas perguntas
                 tag.Perguntas.Add(pergunta);
-
             }
 
-            //salvar a pergunta no banco de dados
+            var verificarPergunta = Pergunta.VerificarPergunta(pergunta);
+
+            if (!string.IsNullOrEmpty(verificarPergunta))
+            {
+                return BadRequest(verificarPergunta);
+            }
+
+
 
             _context.Perguntas.Add(pergunta);
 
